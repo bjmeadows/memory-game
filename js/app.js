@@ -16,7 +16,7 @@ function shuffle(array) {
 /*
  This is a list of all of the cards that I want to have matched on the page. I assigned each card the same name as it would be for its font awesome assignment
  */
-var cardList = ["fa-diamond", "fa-diamond", "fa-anchor", "fa-anchor", "fa-bomb", "fa-bomb", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-paper-plane-o", "fa-paper-plane-o", "fa-diamond", "fa-diamond"];
+var cardList = ["fa-diamond", "fa-diamond", "fa-anchor", "fa-anchor", "fa-bomb", "fa-bomb", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-paper-plane-o", "fa-paper-plane-o", "fa-bicycle", "fa-bicycle"];
 
 
 
@@ -52,6 +52,6 @@ displayCards();
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-$(".card").on('click', function(){
-  $('.card').addClass('open');
+$(".card").on('click', function flip(){
+  $(this).addClass('open show');
 })

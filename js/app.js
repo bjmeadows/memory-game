@@ -14,18 +14,13 @@ function shuffle(array) {
 }
 
 /*
- * Create a list that holds all of your cards
+ This is a list of all of the cards that I want to have matched on the page. I assigned each card the same name as it would be for its font awesome assignment
  */
 var cardList = ["fa-diamond", "fa-diamond", "fa-anchor", "fa-anchor", "fa-bomb", "fa-bomb", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-paper-plane-o", "fa-paper-plane-o", "fa-diamond", "fa-diamond"];
 
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
- //the function is currently adding the previous cards plus the next card in the list; also you need to make it so it actually assigns the whole name as a class instead of just "fa" fa-bomb
+
+ //the function "shuffles" the card list and then provides the html to display the cards on the page face down, each with a random card assigned to it
 function displayCards() {
   for (var x = 0; x < cardList.length; x++) {
     $(".deck").append('<li class="card"> </li>');
@@ -57,3 +52,6 @@ displayCards();
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+$(".card").on('click', function(){
+  $('.card').addClass('open');
+})

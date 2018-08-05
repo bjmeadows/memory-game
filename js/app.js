@@ -52,6 +52,16 @@ displayCards();
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+ //This function flips the cards when they are clicked on as an event listener
+
 $(".card").on('click', function flip(){
   $(this).addClass('open show');
-})
+  return specificClick = $(".fa > a");
+});
+
+//Restart function that sets all of the settings back to default
+$(".restart").on('click', function(){
+  $('.card').remove();
+  displayCards();
+});

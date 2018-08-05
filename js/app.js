@@ -20,12 +20,20 @@ var cardList = ["fa-diamond", "fa-diamond", "fa-anchor", "fa-anchor", "fa-bomb",
 
 
 
- //the function "shuffles" the card list and then provides the html to display the cards on the page face down, each with a random card assigned to it
+//this function displays all of the cards in html. It also adds a child DOM element of "i" which will hold the class fa for each card. It was easier to do it this way after deleting it from the html than to input it all in html again.
 function displayCards() {
   for (var x = 0; x < cardList.length; x++) {
     $(".deck").append('<li class="card"> </li>');
   };
 
+
+};
+
+displayCards();
+
+ //the function "shuffles" the card list and then provides the html to display the cards on the page face down, each with a random card assigned to it
+
+function shuffleCards() {
   $(".card").each(function(){
     $(this).append("<i>");
   });
@@ -40,7 +48,7 @@ function displayCards() {
   };
 };
 
-displayCards();
+shuffleCards()
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -56,12 +64,13 @@ displayCards();
  //This function flips the cards when they are clicked on as an event listener
 
 $(".card").on('click', function flip(){
-  $(this).addClass('open show');
-  return specificClick = $(".fa > a");
+  $(this).addClass('open');
+  $(this).addClass('show');
 });
 
-//Restart function that sets all of the settings back to default
+//Restart function that sets all of the card settings back to not open and reshuffles the game
 $(".restart").on('click', function(){
-  $('.card').remove();
-  displayCards();
+  $('.card').removeClass('open show');
+  $('.card i').remove();
+  shuffleCards();
 });

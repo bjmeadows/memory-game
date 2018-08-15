@@ -1,3 +1,5 @@
+var openCards = [];
+var matchedCards = [];
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -38,9 +40,9 @@ function shuffleCards() {
     $(this).append("<i>");
   });
 
-  var shuffledList = shuffle(cardList);
-  var cards = $(".card i");
 
+  var cards = $(".card i");
+  var shuffledList = shuffle(cardList);
   for (var x = 0; x < shuffledList.length; x++) {
 
     $(cards[x]).addClass("fa " + shuffledList[x]);
@@ -63,14 +65,49 @@ shuffleCards()
 
  //This function flips the cards when they are clicked on as an event listener
 
-$(".card").on('click', function flip(){
-  $(this).addClass('open');
-  $(this).addClass('show');
-});
+
+
+function flipBack(){
+  $('.open').toggleClass('open show');
+};
 
 //Restart function that sets all of the card settings back to not open and reshuffles the game
-$(".restart").on('click', function(){
+$(".restart").on('click', function resetGame(){
   $('.card').removeClass('open show');
   $('.card i').remove();
   shuffleCards();
 });
+
+var clickCount = 0;
+function flipCards(){
+  //checks both elements (total of 2) in openCards to see if they equal eachother
+  if (clickCount < 2) {
+      $(this).toggleClass('open show');
+      openCards.push($(this).children('fa'));
+      clickCount++;
+      console.log(clickCount);
+    } else if (clickCount === 2) {
+      // doesMatch();
+      flipBack();
+      clickCount = 0;
+    }
+  };
+
+$('.card').on('click', flipCards);
+
+
+function doesMatch(){
+  //if the two match in matchChecker push both to matched Cards and add the matched class to the html for those elements
+  if (openCards[0] === openCards[1]) {
+    matchedCards.push(openCards[0, 1]);
+    openCards = [];
+  } else if (openCards[0] != openCards[1]) {
+    flipBack();
+    openCards = [];
+  };
+  // if they do not match then it resets them back to the default state
+};
+//
+// function winChecker(){
+//   //checks the length of matchedCards array to see if it equals the same length as cardList. If it does then the won game popup appears and if not then you continue the game
+// };

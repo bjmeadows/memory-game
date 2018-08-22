@@ -68,7 +68,7 @@ shuffleCards()
 
 
 function flipBack(){
-  $('.open').toggleClass('open show');
+  $('.open').removeClass('open show');
 };
 
 //Restart function that sets all of the card settings back to not open and reshuffles the game
@@ -78,19 +78,18 @@ $(".restart").on('click', function resetGame(){
   shuffleCards();
 });
 
-var clickCount = 0;
+
 function flipCards(){
   //checks both elements (total of 2) in openCards to see if they equal eachother
-  if (clickCount < 2) {
-      $(this).toggleClass('open show');
+  //The problem you are having is that it is requring a click in order to execute the else if section of the loop. You need to change that so it does not require a click, and will only require a click for the first two cards
+  if (openCards.length < 2) {
+      $(this).addClass('open show');
       openCards.push($(this).children('fa'));
-      clickCount++;
-      console.log(clickCount);
-    } else if (clickCount === 2) {
+    } else if (openCards.length === 2) {
       // doesMatch();
       flipBack();
-      clickCount = 0;
-    }
+      openCards = [];
+    };
   };
 
 $('.card').on('click', flipCards);

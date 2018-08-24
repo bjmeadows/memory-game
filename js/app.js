@@ -1,3 +1,5 @@
+//BUGS TO FIX: IF YOU CLICK TOO FAST YOU CAN CLICK THE SAME CARD TWICE, YOU NEED TO REMOVE THE ABILITY TO CLICK A CARD TWICE
+
 var openCards = [];
 var matchedCards = [];
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -13,7 +15,7 @@ function shuffle(array) {
     }
 
     return array;
-}
+};
 
 /*
  This is a list of all of the cards that I want to have matched on the page. I assigned each card the same name as it would be for its font awesome assignment
@@ -63,50 +65,64 @@ shuffleCards()
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
- //This function flips the cards when they are clicked on as an event listener
 
 
 
+//Flips cards back to blank state
 function flipBack(){
-  $('.open').removeClass('open show');
+  $('.open').toggleClass('open show');
 };
 
 //Restart function that sets all of the card settings back to not open and reshuffles the game
 $(".restart").on('click', function resetGame(){
   $('.card').removeClass('open show');
   $('.card i').remove();
+  openCards = [];
   shuffleCards();
 });
 
 
 function flipCards(){
-  //checks both elements (total of 2) in openCards to see if they equal eachother
-  //The problem you are having is that it is requring a click in order to execute the else if section of the loop. You need to change that so it does not require a click, and will only require a click for the first two cards
-  if (openCards.length < 2) {
-      $(this).addClass('open show');
-      openCards.push($(this).children('fa'));
-    } else if (openCards.length === 2) {
-      // doesMatch();
-      flipBack();
-      openCards = [];
-    };
-  };
 
-$('.card').on('click', flipCards);
+  if (openCards.length === 0) {
+      $(this).toggleClass('open show');
+      openCards.push($(this));
+    } else if (openCards.length === 1) {
+      $(this).toggleClass('open show');
+      openCards.push($(this));
+      doesMatch();
+    }
+  };
 
 
 function doesMatch(){
   //if the two match in matchChecker push both to matched Cards and add the matched class to the html for those elements
-  if (openCards[0] === openCards[1]) {
-    matchedCards.push(openCards[0, 1]);
-    openCards = [];
-  } else if (openCards[0] != openCards[1]) {
-    flipBack();
-    openCards = [];
+  if (openCards.length === 2){
+    if (openCards[0].html() === openCards[1].html()) {
+      $(openCards[0].removeClass('open show'));
+      $(openCards[1].removeClass('open show'));
+      $(openCards[0].addClass('match'));
+      $(openCards[1].addClass('match'));
+      matchedCards.push(openCards[0, 1]);
+      openCards = [];
+    } else if (openCards[0].html() != openCards[1].html()) {
+      setTimeout(flipBack, 500);
+      setTimeout(resetOpenCards, 500);
   };
   // if they do not match then it resets them back to the default state
+};
 };
 //
 // function winChecker(){
 //   //checks the length of matchedCards array to see if it equals the same length as cardList. If it does then the won game popup appears and if not then you continue the game
 // };
+
+function resetOpenCards(){
+  openCards = [];
+}
+
+function playGame() {
+  $('.card').click(flipCards);
+}
+
+playGame();

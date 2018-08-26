@@ -108,9 +108,14 @@ h1 {
     cursor: pointer;
 }
 
-.score-panel .timer {
-  float: center;
+.score-panel .timer{
+  float: right;
+  padding-right: 140px;
+  /*padding: 0px;*/
 }
+
+
+
 /*
  * Modal for winning the game,
  * learned how to create by researching at https://www.w3schools.com/howto/howto_css_modals.asp
@@ -149,6 +154,8 @@ h1 {
   font-size: 50px;
   text-align: center;
   font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 100;
 }
 
 .final-score {
@@ -166,4 +173,19 @@ h1 {
 .modal .stars li {
     list-style: none;
     display: inline-block;
+}
+
+.modal .play-again {
+  height: 75px;
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #ffffff;
+  font-size: 45;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }

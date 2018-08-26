@@ -1,7 +1,6 @@
-//BUGS TO FIX: IF YOU CLICK TOO FAST YOU CAN CLICK THE SAME CARD TWICE, YOU NEED TO REMOVE THE ABILITY TO CLICK A CARD TWICE
-
 var openCards = [];
 var matchedCards = [];
+var scoreCounter = 0;
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -29,8 +28,6 @@ function displayCards() {
   for (var x = 0; x < cardList.length; x++) {
     $(".deck").append('<li class="card"> </li>');
   };
-
-
 };
 
 displayCards();
@@ -76,8 +73,9 @@ function flipBack(){
 //Restart function that sets all of the card settings back to not open and reshuffles the game
 $(".restart").on('click', function resetGame(){
   $('.card').removeClass('open show');
+  $('.card').removeClass('match');
   $('.card i').remove();
-  openCards = [];
+  resetOpenCards();
   shuffleCards();
 });
 
@@ -87,11 +85,13 @@ function flipCards(){
   if (openCards.length === 0) {
       $(this).toggleClass('open show');
       openCards.push($(this));
-    } else if (openCards.length === 1) {
+    } else if (openCards.length === 1 && (!$(this).hasClass('open show')) && (!$(this).hasClass('match'))) {
       $(this).toggleClass('open show');
       openCards.push($(this));
       doesMatch();
-    }
+      scoreCounter++;
+      moveCounted();
+    };
   };
 
 
@@ -104,7 +104,7 @@ function doesMatch(){
       $(openCards[0].addClass('match'));
       $(openCards[1].addClass('match'));
       matchedCards.push(openCards[0, 1]);
-      openCards = [];
+      resetOpenCards();
     } else if (openCards[0].html() != openCards[1].html()) {
       setTimeout(flipBack, 500);
       setTimeout(resetOpenCards, 500);
@@ -119,10 +119,16 @@ function doesMatch(){
 
 function resetOpenCards(){
   openCards = [];
-}
+};
 
 function playGame() {
-  $('.card').click(flipCards);
-}
+  $('.card').on('click', flipCards);
+};
+
+
+//Counts each move and edits the html to show the score
+function moveCounted() {
+  $('.moves').html(scoreCounter);
+};
 
 playGame();

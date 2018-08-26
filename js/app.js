@@ -51,20 +51,6 @@ function shuffleCards() {
 
 shuffleCards()
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
-
-
-
 //Flips cards back to blank state
 function flipBack(){
   $('.open').toggleClass('open show');
@@ -80,6 +66,7 @@ $(".restart").on('click', function resetGame(){
   scoreCounter = 0;
   $('.moves').html(scoreCounter);
   matchedCards = [];
+  resetStars();
 });
 
 
@@ -95,12 +82,14 @@ function flipCards(){
       scoreCounter++;
       moveCounted();
       starRating();
+      winChecker();
     };
   };
 
 
 function doesMatch(){
   //if the two match in matchChecker push both to matched Cards and add the matched class to the html for those elements
+  // if they do not match then it resets them back to the default state
   if (openCards.length === 2){
     if (openCards[0].html() === openCards[1].html()) {
       $(openCards[0].removeClass('open show'));
@@ -112,9 +101,8 @@ function doesMatch(){
     } else if (openCards[0].html() != openCards[1].html()) {
       setTimeout(flipBack, 500);
       setTimeout(resetOpenCards, 500);
+    };
   };
-  // if they do not match then it resets them back to the default state
-};
 };
 //
 
@@ -144,12 +132,33 @@ function starRating() {
   }
 };
 
-function winPopUp() {
+function resetStars() {
+  $('.stars li .fa.fa-star-o').replaceWith('<i class = "fa fa-star"> </i>')
+}
 
+function winPopUp() {
+  $('.modal').css({display: "block"});
+  $('.close-button').on('click', function resetGame(){
+    $('.card').removeClass('open show');
+    $('.card').removeClass('match');
+    $('.card i').remove();
+    resetOpenCards();
+    shuffleCards();
+    scoreCounter = 0;
+    $('.moves').html(scoreCounter);
+    matchedCards = [];
+    $('.modal').css({display: 'none'});
+    resetStars();
+  });
 };
 
 function winChecker(){
   //checks the length of matchedCards array to see if it equals the same length as cardList. If it does then the won game popup appears and if not then you continue the game
+  if (matchedCards.length === 8) {
+    $('#score-number').html("Final Score: " + scoreCounter + " Moves");
+    $('.stars').clone().appendTo('#star-score');
+    winPopUp();
+  }
 };
 
 playGame();

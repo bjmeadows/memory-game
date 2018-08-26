@@ -77,6 +77,9 @@ $(".restart").on('click', function resetGame(){
   $('.card i').remove();
   resetOpenCards();
   shuffleCards();
+  scoreCounter = 0;
+  $('.moves').html(scoreCounter);
+  matchedCards = [];
 });
 
 
@@ -91,6 +94,7 @@ function flipCards(){
       doesMatch();
       scoreCounter++;
       moveCounted();
+      starRating();
     };
   };
 
@@ -113,9 +117,7 @@ function doesMatch(){
 };
 };
 //
-// function winChecker(){
-//   //checks the length of matchedCards array to see if it equals the same length as cardList. If it does then the won game popup appears and if not then you continue the game
-// };
+
 
 function resetOpenCards(){
   openCards = [];
@@ -129,6 +131,25 @@ function playGame() {
 //Counts each move and edits the html to show the score
 function moveCounted() {
   $('.moves').html(scoreCounter);
+};
+
+//Changes the star rating based on overall score
+function starRating() {
+  if (scoreCounter === 15) {
+    $('.stars li .fa.fa-star').last().replaceWith('<i class = "fa fa-star-o"> </i>');
+  } else if (scoreCounter === 20) {
+    $('.stars li .fa.fa-star').last().replaceWith('<i class = "fa fa-star-o"> </i>');
+  } else if (scoreCounter === 25) {
+    $('.stars li .fa.fa-star').last().replaceWith('<i class = "fa fa-star-o"> </i>');
+  }
+};
+
+function winPopUp() {
+
+};
+
+function winChecker(){
+  //checks the length of matchedCards array to see if it equals the same length as cardList. If it does then the won game popup appears and if not then you continue the game
 };
 
 playGame();
